@@ -1,0 +1,16 @@
+/* Colors */
+:root {
+  --base-color: black;
+  --primary-color: #ffffff;
+  --accent-color: #6d90d0;
+  --primary-text: #ffffff;
+  --secondary-text: #636569;
+}
+
+.darkmode {
+  --base-color: #121212;
+  --primary-color: #ff0000;
+  --accent-color: #0071ff;
+  --primary-text: #e0e0e0;
+  --secondary-text: #b0b0b0;
+}

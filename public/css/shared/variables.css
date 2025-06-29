@@ -1,0 +1,13 @@
+:root {
+  /* Typography */
+  --font-family: "Arial, sans-serif";
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+  --font-size-large: 18px;
+  --line-height: 1.5;
+  --letter-spacing: 0.5px;
+
+  --sb-track-color: var(--base-color);
+  --sb-thumb-color: var(--primary-color);
+  --sb-size: 6px;
+}
