@@ -4,6 +4,7 @@
   "description": "Aplicación web para consultar el clima de determinada ciudad.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yael Rodríguez (Roggi)",
