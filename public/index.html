@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="" />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="Weather, App" />
     <meta name="author" content="Yael Rodríguez Gómez" />
 
-    <title>Document</title>
+    <title>Weather App</title>
 
     <link rel="icon" href="" />
 
@@ -56,6 +56,8 @@
                 type="button"
                 id="searchButton"
                 class="btn c-search-icon"
+                aria-label="Buscar"
+                title="Buscar"
                 onclick="searchWeatherByCity()"
               >
                 <i class="bi bi-search"></i>
@@ -84,7 +86,9 @@
                 <!-- Today -->
                 <div class="mb-2 my-md-0 c-card">
                   <p id="todayDate" class="m-0 c-forecast-name-date">--</p>
-                  <p id="todayMapTemp" class="m-0 c-forecast-temperature">--</p>
+                  <p id="todayMapTemp" class="m-0 c-forecast-temperature">
+                    --° C
+                  </p>
                   <i
                     id="todayWeatherIcon"
                     class="bi bi-dash-circle c-forecast-weather-icon"
@@ -95,7 +99,7 @@
                 <div class="my-2 my-md-0 c-card">
                   <p id="tomorrowDate" class="m-0 c-forecast-name-date">--</p>
                   <p id="tomorroMapTemp" class="m-0 c-forecast-temperature">
-                    --
+                    --° C
                   </p>
                   <i
                     id="tomorrowWeatherIcon"
@@ -112,7 +116,7 @@
                     id="dayAfterTomorrowMapTemp"
                     class="m-0 c-forecast-temperature"
                   >
-                    --
+                    --° C
                   </p>
                   <i
                     id="dayAfterTomorrowWeatherIcon"
@@ -128,11 +132,11 @@
             <p class="m-0 c-video-credits">
               Video by:
               <a
-                href="https://pixabay.com/videos/background-sample-flooded-rain-16224/"
+                href="https://www.pexels.com/es-es/video/video-de-lapso-de-tiempo-de-autos-pasando-en-un-dia-lluvioso-855222//"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Gam-Ol
+                Pixabay
               </a>
             </p>
           </div>
@@ -141,7 +145,7 @@
         <!-- Video -->
         <div class="c-video-container">
           <video autoplay muted loop class="c-bg-video">
-            <source src="./media/video/16224-270577444_tiny.mp4" />
+            <source src="./media/video/855222-sd_960_540_25fps.mp4" />
           </video>
         </div>
       </section>
@@ -154,7 +158,7 @@
           <!-- 08:00 -->
           <div class="mb-5 c-grid">
             <div class="c-today-card">
-              <p id="08:00Temp" class="m-0 mb-3 c-today-temp">--</p>
+              <p id="08:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
               <i
                 id="08:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
@@ -164,7 +168,7 @@
 
             <!-- 12:00 -->
             <div class="c-today-card">
-              <p id="12:00Temp" class="m-0 mb-3 c-today-temp">--</p>
+              <p id="12:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
               <i
                 id="12:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
@@ -174,7 +178,7 @@
 
             <!-- 16:00 -->
             <div class="c-today-card">
-              <p id="16:00Temp" class="m-0 mb-3 c-today-temp">--</p>
+              <p id="16:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
               <i
                 id="16:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
@@ -184,7 +188,7 @@
 
             <!-- 20:00 -->
             <div class="c-today-card">
-              <p id="20:00Temp" class="m-0 mb-3 c-today-temp">--</p>
+              <p id="20:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
               <i
                 id="20:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
@@ -194,7 +198,7 @@
 
             <!-- 00:00 -->
             <div class="c-today-card">
-              <p id="00:00Temp" class="m-0 mb-3 c-today-temp">--</p>
+              <p id="00:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
               <i
                 id="00:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
@@ -211,7 +215,11 @@
         <p class="m-0 c-author">&copy; <span>2025 </span>-RoggiDev</p>
 
         <div class="c-socials">
-          <a href="mailto:yael.rodriguez.g@outlook.es" class="c-socials-icon">
+          <a
+            href="mailto:yael.rodriguez.g@outlook.es"
+            class="c-socials-icon"
+            aria-label="Email"
+          >
             <i class="bi bi-envelope"></i>
           </a>
 
@@ -220,6 +228,7 @@
             class="c-socials-icon"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
           >
             <i class="bi bi-linkedin"></i>
           </a>
@@ -229,12 +238,15 @@
             class="c-socials-icon"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitGub"
           >
             <i class="bi bi-github"></i>
           </a>
         </div>
       </div>
     </footer>
+
+    <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"

@@ -1,3 +1,19 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const lenis = new Lenis({
+    autoRaf: true,
+    duration: 1.2,
+    smooth: true,
+    orientation: "vertical",
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+});
+
 const searchWeatherByCity = () => {
   const city = document.getElementById("cityInput").value;
 
@@ -17,7 +33,7 @@ const searchWeatherByCity = () => {
         const today = data.dateToday.split(" ")[0];
 
         const getDayAbbr = (dateStr) => {
-          const dateObj = new Date(dateStr);
+          const dateObj = new Date(dateStr + "T12:00:00");
           return dateObj.toLocaleDateString("es-MX", { weekday: "short" });
         };
 
