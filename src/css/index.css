@@ -23,16 +23,26 @@
 
 .c-search-icon,
 #cityInput {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   color: var(--primary-text) !important;
   border: 1px solid white;
   font-size: clamp(1.3rem, 1.5vw, 1.8rem);
 }
 
-#cityInput::placeholder {
+.c-form-label {
+  background-color: transparent;
   color: var(--primary-text);
-  opacity: 1;
+  font-size: 1.1rem;
+}
+
+.form-floating > label {
+  color: var(--primary-text) !important;
+}
+
+.form-floating > label::after {
+  color: var(--primary-text) !important;
+  background-color: var(--base-color) !important;
 }
 
 .c-hero-content {
@@ -159,6 +169,7 @@
 }
 
 .c-today-card {
+  height: 100%;
   border: 2px solid white;
   border-radius: 15px;
   padding: 20px;
@@ -175,6 +186,10 @@
 
 .c-today-weather {
   font-size: 6rem;
+}
+
+.c-today-desc {
+  font-size: 1.5rem;
 }
 
 .c-today-hour {

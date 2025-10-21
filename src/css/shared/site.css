@@ -10,14 +10,16 @@
 }
 
 html {
-  font-family: var(--font);
-  line-height: 1.5rem;
+  font-size: 1em;
+  height: 100%;
 }
 
 body {
-  height: 100dvh;
+  scroll-behavior: smooth;
+  font-family: var(--font-family);
+  height: 100%;
+  min-height: 100dvh;
   width: 100%;
-  font-size: 1em;
   color: var(--primary-text);
   background-color: var(--base-color);
   margin: 0;
@@ -43,14 +45,10 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-main {
-  flex: 1;
-}
-
-ul,
+/* ul,
 ol {
   list-style: none;
-}
+} */
 
 a,
 button {
@@ -59,8 +57,13 @@ button {
   transition: color 0.3s ease;
 }
 
+a {
+  color: var(--accent-color);
+}
+
 button:hover {
-  background-color: darken(var(--accent-color), 10%);
+  filter: brightness(90%);
+  transform: scale(1.1);
 }
 
 button:active {
@@ -84,7 +87,7 @@ table {
   border-spacing: 0;
 }
 
-/* @media (max-width: 767px) {
+@media (max-width: 767px) {
   body {
     font-size: 14px;
   }
@@ -100,4 +103,4 @@ table {
   body {
     font-size: 16px;
   }
-} */
+}

@@ -1,21 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const lenis = new Lenis({
-    autoRaf: true,
-    duration: 1.2,
-    smooth: true,
-    orientation: "vertical",
+  const weatherForm = document.getElementById("weatherForm");
+
+  weatherForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    searchWeatherByCity();
   });
-
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
 });
 
 const searchWeatherByCity = () => {
-  const city = document.getElementById("cityInput").value;
+  const cityInput = document.getElementById("cityInput");
+
+  const city = cityInput.value;
 
   if (city != "") {
     // Realiza una petición HTTP GET enviando la ciudad
@@ -32,13 +28,15 @@ const searchWeatherByCity = () => {
 
         const today = data.dateToday.split(" ")[0];
 
+        // Obtener fecha formateada
         const getDayAbbr = (dateStr) => {
           const dateObj = new Date(dateStr + "T12:00:00");
           return dateObj.toLocaleDateString("es-MX", { weekday: "short" });
         };
 
+        // Obtener ícono del clima
         const getWeatherIcon = (descriptionStr) => {
-          d = descriptionStr.toLowerCase();
+          const d = descriptionStr.toLowerCase();
 
           if (
             d.includes("despejado") ||
@@ -93,16 +91,21 @@ const searchWeatherByCity = () => {
           if (d.includes("ventoso") || d.includes("viento")) return "bi-wind";
         };
 
-        // Current Info
+        // ! Current Info
         document.getElementById("city").textContent = data.location;
         document.getElementById("date").textContent = today;
         document.getElementById("temp").textContent = data.temperature;
         document.getElementById("weather").textContent = data.description;
         document.getElementById(
+          "currentWeatherIcon"
+        ).className = `bi ${getWeatherIcon(
+          data.description
+        )} c-forecast-weather-icon`;
+        document.getElementById(
           "tempMinMax"
         ).textContent = `Min: ${data.minTempToday} - Max: ${data.maxTempToday}`;
 
-        // Forecast Info
+        // ! Forecast Info
         document.getElementById("todayDate").textContent = getDayAbbr(
           data.forecastDates[0]
         );
@@ -138,18 +141,21 @@ const searchWeatherByCity = () => {
         /* document.getElementById("todayMapTemp").textContent =
           data.forecast[0].description; */
 
-        // Forecast Today Info
-        document.getElementById("08:00Temp").textContent =
-          data.hourlyForecast[0].temp;
-        document.getElementById("12:00Temp").textContent =
-          data.hourlyForecast[1].temp;
-        document.getElementById("16:00Temp").textContent =
-          data.hourlyForecast[2].temp;
-        document.getElementById("20:00Temp").textContent =
-          data.hourlyForecast[3].temp;
-        document.getElementById("00:00Temp").textContent =
-          data.hourlyForecast[4].temp;
+        // ! Forecast Today Info
 
+        // Descripción
+        document.getElementById("08:00Desc").textContent =
+          data.hourlyForecast[0].description;
+        document.getElementById("12:00Desc").textContent =
+          data.hourlyForecast[1].description;
+        document.getElementById("16:00Desc").textContent =
+          data.hourlyForecast[2].description;
+        document.getElementById("20:00Desc").textContent =
+          data.hourlyForecast[3].description;
+        document.getElementById("00:00Desc").textContent =
+          data.hourlyForecast[4].description;
+
+        // Icono
         document.getElementById(
           "08:00WeatherIcon"
         ).className = `bi ${getWeatherIcon(
@@ -165,10 +171,6 @@ const searchWeatherByCity = () => {
         ).className = `bi ${getWeatherIcon(
           data.hourlyForecast[2].description
         )} c-today-weather`;
-
-        /* document.getElementById("16:00WeatherIcon").textContent =
-          data.hourlyForecast[2].description; */
-
         document.getElementById(
           "20:00WeatherIcon"
         ).className = `bi ${getWeatherIcon(
@@ -179,6 +181,23 @@ const searchWeatherByCity = () => {
         ).className = `bi ${getWeatherIcon(
           data.hourlyForecast[4].description
         )} c-today-weather`;
+
+        // Temperatura Promedio
+        document.getElementById("08:00Temp").textContent =
+          data.hourlyForecast[0].temp;
+        document.getElementById("12:00Temp").textContent =
+          data.hourlyForecast[1].temp;
+        document.getElementById("16:00Temp").textContent =
+          data.hourlyForecast[2].temp;
+        document.getElementById("20:00Temp").textContent =
+          data.hourlyForecast[3].temp;
+        document.getElementById("00:00Temp").textContent =
+          data.hourlyForecast[4].temp;
+
+        // Resetear Form
+        const weatherForm = document.getElementById("weatherForm");
+
+        weatherForm.reset();
       })
       .catch((err) => {
         console.error("Error al obtener el clima:", err);

@@ -7,15 +7,29 @@
     <meta name="description" content="" />
     <meta name="keywords" content="Weather, App" />
     <meta name="author" content="Yael Rodríguez Gómez" />
+    <meta name="robots" content="index, follow" />
 
-    <title>Weather App</title>
+    <!-- Open Graph -->
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:type" content="" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="" />
+
+    <link rel="canonical" href="" />
 
     <link rel="icon" href="" />
 
+    <title>Weather App</title>
+
+    <!-- libraries -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
 
@@ -24,51 +38,61 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
 
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./css/shared/layout.css" />
     <link rel="stylesheet" href="./css/shared/site.css" />
     <link rel="stylesheet" href="./css/shared/variables.css" />
     <link rel="stylesheet" href="./css/shared/theme.css" />
 
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/index.css" />
   </head>
 
   <body>
+    <!-- ! Header -->
+    <header></header>
+
+    <!-- ! Main -->
     <main>
       <!-- ! Main Section -->
       <section class="px-3 px-md-0 c-main-section">
         <div class="container pt-5 pb-3 c-container">
           <!-- Search bar -->
           <div class="mb-3 mb-md-0 c-search-bar">
-            <div class="input-group">
-              <span class="input-group-text c-search-icon">
-                <i class="bi bi-geo-alt"></i>
-              </span>
+            <form action="" id="weatherForm" class="w-100">
+              <div class="input-group">
+                <span class="input-group-text c-search-icon">
+                  <i class="bi bi-geo-alt"></i>
+                </span>
 
-              <input
-                type="search"
-                id="cityInput"
-                class="form-control"
-                id="floatingInputGroup1"
-                placeholder="City"
-                autocomplete="none"
-              />
+                <div class="form-floating">
+                  <input
+                    type="search"
+                    id="cityInput"
+                    class="form-control"
+                    placeholder="Ciudad"
+                    autocomplete="none"
+                  />
 
-              <button
-                type="button"
-                id="searchButton"
-                class="btn c-search-icon"
-                aria-label="Buscar"
-                title="Buscar"
-                onclick="searchWeatherByCity()"
-              >
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
+                  <label for="cityInput" class="c-form-label">Ciudad</label>
+                </div>
+
+                <button
+                  type="submit"
+                  id="searchButton"
+                  class="btn c-search-icon"
+                  aria-label="Buscar"
+                  title="Buscar"
+                >
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </form>
           </div>
 
-          <!-- Content -->
+          <!-- Weather Content -->
           <div class="my-2 my-md-5 c-hero-content">
             <div class="row m-0 w-100">
-              <!-- Current Info -->
+              <!-- ! Current Info -->
               <div class="col-12 col-sm mb-3 mb-sm-0 p-0 c-current-info">
                 <h2 id="city" class="m-0">--</h2>
 
@@ -76,35 +100,46 @@
 
                 <p id="temp" class="m-0 py-2 py-md-0">--° C</p>
 
-                <p id="weather" class="m-0">--</p>
+                <p class="m-0 d-flex gap-2">
+                  <span id="weather">--</span>
+
+                  <span
+                    id="currentWeatherIcon"
+                    class="bi c-forecast-weather-icon"
+                  ></span>
+                </p>
 
                 <p id="tempMinMax" class="m-0">Min: --° C - Max: --° C</p>
               </div>
 
-              <!-- Forecast Info -->
+              <!-- ! Forecast Info -->
               <div class="col-12 col-sm-4 mt-3 mt-sm-0 p-0 c-cards">
                 <!-- Today -->
                 <div class="mb-2 my-md-0 c-card">
                   <p id="todayDate" class="m-0 c-forecast-name-date">--</p>
-                  <p id="todayMapTemp" class="m-0 c-forecast-temperature">
-                    --° C
-                  </p>
+
                   <i
                     id="todayWeatherIcon"
                     class="bi bi-dash-circle c-forecast-weather-icon"
                   ></i>
+
+                  <p id="todayMapTemp" class="m-0 c-forecast-temperature">
+                    --° C
+                  </p>
                 </div>
 
                 <!-- Tomorrow -->
                 <div class="my-2 my-md-0 c-card">
                   <p id="tomorrowDate" class="m-0 c-forecast-name-date">--</p>
-                  <p id="tomorroMapTemp" class="m-0 c-forecast-temperature">
-                    --° C
-                  </p>
+
                   <i
                     id="tomorrowWeatherIcon"
                     class="bi bi-dash-circle c-forecast-weather-icon"
                   ></i>
+
+                  <p id="tomorroMapTemp" class="m-0 c-forecast-temperature">
+                    --° C
+                  </p>
                 </div>
 
                 <!-- Day After Tomorrow -->
@@ -112,16 +147,18 @@
                   <p id="dayAfterTomorrowDate" class="m-0 c-forecast-name-date">
                     --
                   </p>
+
+                  <i
+                    id="dayAfterTomorrowWeatherIcon"
+                    class="bi bi-dash-circle c-forecast-weather-icon"
+                  ></i>
+
                   <p
                     id="dayAfterTomorrowMapTemp"
                     class="m-0 c-forecast-temperature"
                   >
                     --° C
                   </p>
-                  <i
-                    id="dayAfterTomorrowWeatherIcon"
-                    class="bi bi-dash-circle c-forecast-weather-icon"
-                  ></i>
                 </div>
               </div>
             </div>
@@ -153,66 +190,87 @@
         </div>
       </section>
 
-      <!-- Secondary Section -->
+      <!-- ! Today Forecast Section -->
       <section class="px-3 px-md-0 c-secondary-section">
         <div class="container pb-5 pt-3 c-container">
           <h1 class="mb-5 c-today-title">Pronóstico de hoy</h1>
 
-          <!-- 08:00 -->
           <div class="mb-5 c-grid">
-            <div class="c-today-card">
-              <p id="08:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
+            <!-- ? 08:00 -->
+            <div class="d-flex flex-column gap-3 c-today-card">
+              <p class="m-0 c-today-hour">6:00 am</p>
+
               <i
                 id="08:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
               ></i>
-              <p class="m-0 mt-3 c-today-hour">6:00 am</p>
+
+              <p id="08:00Desc" class="m-0 c-today-desc">--</p>
+
+              <p id="08:00Temp" class="m-0 c-today-temp">--° C</p>
             </div>
 
-            <!-- 12:00 -->
-            <div class="c-today-card">
-              <p id="12:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
+            <!-- ? 12:00 -->
+            <div class="d-flex flex-column gap-3 c-today-card">
+              <p class="m-0 c-today-hour">12:00 pm</p>
+
               <i
                 id="12:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
               ></i>
-              <p class="m-0 mt-3 c-today-hour">12:00 am</p>
+
+              <p id="12:00Desc" class="m-0 c-today-desc">--</p>
+
+              <p id="12:00Temp" class="m-0 c-today-temp">--° C</p>
             </div>
 
-            <!-- 16:00 -->
-            <div class="c-today-card">
-              <p id="16:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
+            <!-- ? 16:00 -->
+            <div class="d-flex flex-column gap-3 c-today-card">
+              <p class="m-0 c-today-hour">04:00 pm</p>
+
               <i
                 id="16:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
               ></i>
-              <p class="m-0 mt-3 c-today-hour">04:00 pm</p>
+
+              <p id="16:00Desc" class="m-0 c-today-desc">--</p>
+
+              <p id="16:00Temp" class="m-0 c-today-temp">--° C</p>
             </div>
 
-            <!-- 20:00 -->
-            <div class="c-today-card">
-              <p id="20:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
+            <!-- ? 20:00 -->
+            <div class="d-flex flex-column gap-3 c-today-card">
+              <p class="m-0 c-today-hour">08:00 pm</p>
+
               <i
                 id="20:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
               ></i>
-              <p class="m-0 mt-3 c-today-hour">08:00 pm</p>
+
+              <p id="20:00Desc" class="m-0 c-today-desc">--</p>
+
+              <p id="20:00Temp" class="m-0 c-today-temp">--° C</p>
             </div>
 
-            <!-- 00:00 -->
-            <div class="c-today-card">
-              <p id="00:00Temp" class="m-0 mb-3 c-today-temp">--° C</p>
+            <!-- ? 00:00 -->
+            <div class="d-flex flex-column gap-3 c-today-card">
+              <p class="m-0 c-today-hour">12:00 am</p>
+
               <i
                 id="00:00WeatherIcon"
                 class="bi bi-dash-circle c-today-weather"
               ></i>
-              <p class="m-0 mt-3 c-today-hour">12:00 am</p>
+
+              <p id="00:00Desc" class="m-0 c-today-desc">--</p>
+
+              <p id="00:00Temp" class="m-0 c-today-temp">--° C</p>
             </div>
           </div>
         </div>
       </section>
     </main>
 
+    <!-- ! Footer -->
     <footer class="m-0 py-4 px-3 px-md-0">
       <div class="container c-footer-container">
         <p class="m-0 c-author">&copy; <span>2025 </span>-RoggiDev</p>
@@ -249,14 +307,17 @@
       </div>
     </footer>
 
+    <!-- Libraries -->
     <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script>
 
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
 
-    <script src="./js/script.js"></script>
+    <!-- Scripts -->
+    <script src="./js/shared/layout.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>

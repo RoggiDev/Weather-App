@@ -6,42 +6,49 @@ const path = require("path");
 
 const app = express();
 
-const API_KEY = process.env.API_KEY_WEATHERSTACK;
+const API_KEY = process.env.API_KEY_WEATHERAPI;
 const PORT = process.env.PORT || 3000;
 
+// Ruta principal
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "src", "index.html"));
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+// Middleware para servir archivos estáticos
+app.use(express.static(path.join(__dirname, "src")));
 
+// ! Ruta API que devuelve el clima de una ciudad
 app.get("/api/weather", async (req, res) => {
   const city = req.query.city;
+
   if (!city) return res.status(400).json({ error: "Ciudad no proporcionada" });
 
   try {
-    const [currentRes, forecastRes] = await Promise.all([
-      axios.get("http://api.weatherapi.com/v1/current.json", {
-        params: { key: API_KEY, q: city, lang: "es" },
-      }),
+    // Realiza la solicitud a la API de WeatherAPI
+    const response = await axios.get(
+      "http://api.weatherapi.com/v1/forecast.json",
+      {
+        params: {
+          key: API_KEY,
+          q: city,
+          days: 3,
+          lang: "es",
+        },
+      }
+    );
 
-      axios.get("http://api.weatherapi.com/v1/forecast.json", {
-        params: { key: API_KEY, q: city, days: 3, lang: "es" },
-      }),
-    ]);
+    const { location, current, forecast } = response.data;
 
-    const currentData = currentRes.data;
-    const forecastData = forecastRes.data;
-
-    if (!currentData.location || !currentData.current) {
+    // Validaciones
+    if (!location || !current) {
       return res.status(404).json({ error: "Ciudad no encontrada (current)" });
     }
 
-    if (!forecastData.forecast) {
+    if (!forecast?.forecastday) {
       return res.status(404).json({ error: "Ciudad no encontrada (forecast)" });
     }
 
-    const avgTemps = forecastData.forecast.forecastday.map((day) => ({
+    const avgTemps = forecast.forecastday.map((day) => ({
       date: day.date,
       avgTemp: `${day.day.avgtemp_c}° C`,
       maxTemp: `${day.day.maxtemp_c}° C`,
@@ -49,18 +56,17 @@ app.get("/api/weather", async (req, res) => {
       description: day.day.condition.text,
     }));
 
-    const todayForecast = forecastData.forecast.forecastday[0].day;
+    const todayForecast = forecast.forecastday[0].day;
 
-    const forecastDates = forecastData.forecast.forecastday.map(
-      (day) => day.date
-    );
+    const forecastDates = forecast.forecastday.map((day) => day.date);
 
-    const todayHours = forecastData.forecast.forecastday[0].hour;
+    const todayHours = forecast.forecastday[0].hour;
 
     const horasDeseadas = ["08:00", "12:00", "16:00", "20:00", "00:00"];
 
     const hourlyForecast = horasDeseadas.map((hora) => {
       const horaMatch = todayHours.find((h) => h.time.endsWith(hora));
+
       return horaMatch
         ? {
             temp: `${horaMatch.temp_c}° C`,
@@ -72,19 +78,24 @@ app.get("/api/weather", async (req, res) => {
           };
     });
 
+    // Retorna la respuesta en formato JSON
     res.json({
-      location: `${currentData.location.name}, ${currentData.location.country}`,
-      dateToday: `${currentData.location.localtime}`,
-      temperature: `${currentData.current.temp_c}° C`,
-      description: currentData.current.condition.text,
+      // ! Current Info
+      location: `${location.name}, ${location.country}`,
+      dateToday: `${location.localtime}`,
+      temperature: `${current.temp_c}° C`,
+      description: current.condition.text,
       maxTempToday: `${todayForecast.maxtemp_c}° C`,
       minTempToday: `${todayForecast.mintemp_c}° C`,
+      // ! Forecast Info
       forecastDates: forecastDates,
       forecast: avgTemps,
+      // ! Forecast Today Info
       hourlyForecast: hourlyForecast,
     });
   } catch (err) {
     console.error(err);
+
     res.status(500).json({ error: "Error consultando clima" });
   }
 });

@@ -1,6 +1,6 @@
 :root {
   /* Typography */
-  --font-family: "Arial, sans-serif";
+  --font-family: system-ui;
   --font-size-base: 16px;
   --font-size-small: 14px;
   --font-size-large: 18px;
