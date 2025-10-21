@@ -6,7 +6,8 @@ const path = require("path");
 
 const app = express();
 
-const API_KEY = process.env.API_KEY_WEATHERAPI;
+const API_KEY_GEOAPIFY = process.env.API_KEY_GEOAPIFY;
+const API_KEY_WEATHERAPI = process.env.API_KEY_WEATHERAPI;
 const PORT = process.env.PORT || 3000;
 
 // Ruta principal
@@ -16,6 +17,49 @@ app.get("/", (req, res) => {
 
 // Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, "src")));
+
+// ! Ruta API que devuelve una lista de 20 ciudades
+app.get("/api/autocomplete", async (req, res) => {
+  const initials = req.query.initials?.trim();
+
+  if (!initials) {
+    return res.status(400).json({ error: "Iniciales no proporcionadas" });
+  }
+
+  try {
+    const response = await axios.get(
+      "https://api.geoapify.com/v1/geocode/autocomplete",
+      {
+        params: {
+          text: initials,
+          apiKey: API_KEY_GEOAPIFY,
+          limit: 20,
+          type: "city",
+          lang: "en",
+        },
+      }
+    );
+
+    const features = response.data.features;
+
+    if (!features) {
+      return res.status(500).json({ error: "Geoapify no devolvió resultados" });
+    }
+
+    const cities = features
+      .filter((r) => r.properties?.city)
+      .map((r) => ({
+        name: r.properties.city,
+        country: r.properties.country,
+      }));
+
+    res.json(cities);
+  } catch (error) {
+    console.error("Error al obtener sugerencias:", error.message);
+
+    res.status(500).json({ error: "Error al obtener sugerencias" });
+  }
+});
 
 // ! Ruta API que devuelve el clima de una ciudad
 app.get("/api/weather", async (req, res) => {
@@ -29,7 +73,7 @@ app.get("/api/weather", async (req, res) => {
       "http://api.weatherapi.com/v1/forecast.json",
       {
         params: {
-          key: API_KEY,
+          key: API_KEY_WEATHERAPI,
           q: city,
           days: 3,
           lang: "es",
@@ -82,7 +126,7 @@ app.get("/api/weather", async (req, res) => {
     res.json({
       // ! Current Info
       location: `${location.name}, ${location.country}`,
-      dateToday: `${location.localtime}`,
+      // dateToday: `${location.localtime}`,
       temperature: `${current.temp_c}° C`,
       description: current.condition.text,
       maxTempToday: `${todayForecast.maxtemp_c}° C`,
@@ -94,7 +138,7 @@ app.get("/api/weather", async (req, res) => {
       hourlyForecast: hourlyForecast,
     });
   } catch (err) {
-    console.error(err);
+    // console.error(err);
 
     res.status(500).json({ error: "Error consultando clima" });
   }

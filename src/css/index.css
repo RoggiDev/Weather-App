@@ -101,6 +101,10 @@
   font-size: clamp(1.3rem, 2vw, 3rem);
 }
 
+.c-current-weather {
+  justify-content: start;
+}
+
 .c-forecast-weather-icon {
   font-size: clamp(1.5rem, 2.3vw, 3rem);
 }
@@ -235,6 +239,10 @@ footer {
 
   .c-current-info {
     text-align: center;
+  }
+
+  .c-current-weather {
+    justify-content: center;
   }
 
   .c-today-title {

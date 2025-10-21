@@ -1,32 +1,95 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const weatherForm = document.getElementById("weatherForm");
+  const cityInput = document.getElementById("cityInput");
+  const datalist = document.getElementById("cityList");
+  const searchButton = document.getElementById("searchButton");
+  const form = document.getElementById("weatherForm");
 
-  weatherForm.addEventListener("submit", (e) => {
+  cityInput.addEventListener("input", debounce(citySuggestions, 300));
+
+  cityInput.addEventListener("change", (e) => {
+    datalist.innerHTML = "";
+
+    searchButton.focus();
+  });
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    datalist.innerHTML = "";
 
     searchWeatherByCity();
   });
 });
 
+// ! Retrasar la ejecución mientras se siga escribiendo
+function debounce(func, delay) {
+  let timeout;
+
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// ! Auto Completar la Ciudad
+const citySuggestions = async () => {
+  const cityInput = document.getElementById("cityInput");
+  const datalist = document.getElementById("cityList");
+
+  const initials = cityInput.value.trim();
+
+  if (initials.length < 2) {
+    datalist.innerHTML = ""; // limpiar si hay pocos caracteres
+    return;
+  }
+  try {
+    const response = await fetch(
+      `/api/autocomplete?initials=${encodeURIComponent(initials)}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor");
+    }
+
+    // Limpia el datalist
+    datalist.innerHTML = "";
+
+    const cities = await response.json();
+
+    // Agregar opciones al datalist
+    cities.forEach((city) => {
+      const option = document.createElement("option");
+      option.value = city.name + ", " + city.country;
+      datalist.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error al obtener sugerencias:", err);
+  }
+};
+
+// ! Consultar Clima por Ciudad
 const searchWeatherByCity = () => {
   const cityInput = document.getElementById("cityInput");
 
   const city = cityInput.value;
 
   if (city != "") {
-    // Realiza una petición HTTP GET enviando la ciudad
     fetch(`/api/weather?city=${encodeURIComponent(city)}`)
-      // Convierte la respuesta a JSON
       .then((res) => res.json())
-      // Obtiene los datos recibidos
       .then((data) => {
-        // Si hubo un error se muestra el mensaje en un alert
         if (data.error) {
-          alert(data.error);
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: data.error,
+            theme: "dark",
+          });
+
           return;
         }
 
-        const today = data.dateToday.split(" ")[0];
+        // const today = data.dateToday.split(" ")[0];
+        const now = new Date();
 
         // Obtener fecha formateada
         const getDayAbbr = (dateStr) => {
@@ -93,7 +156,8 @@ const searchWeatherByCity = () => {
 
         // ! Current Info
         document.getElementById("city").textContent = data.location;
-        document.getElementById("date").textContent = today;
+        // document.getElementById("date").textContent = today;
+        document.getElementById("date").textContent = now.toLocaleDateString();
         document.getElementById("temp").textContent = data.temperature;
         document.getElementById("weather").textContent = data.description;
         document.getElementById(
@@ -203,8 +267,9 @@ const searchWeatherByCity = () => {
         console.error("Error al obtener el clima:", err);
       });
   } else {
-    document.getElementById("city").textContent = "-";
-    document.getElementById("temp").textContent = "-";
-    document.getElementById("weather").textContent = "-";
+    document.getElementById("city").textContent = "--";
+    document.getElementById("date").textContent = "--/--/----";
+    document.getElementById("temp").textContent = "--° C";
+    document.getElementById("weather").textContent = "--";
   }
 };
