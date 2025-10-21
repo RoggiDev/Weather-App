@@ -71,7 +71,7 @@ const citySuggestions = async () => {
 const searchWeatherByCity = () => {
   const cityInput = document.getElementById("cityInput");
 
-  const city = cityInput.value;
+  const city = cityInput.value.trim();
 
   if (city != "") {
     fetch(`/api/weather?city=${encodeURIComponent(city)}`)
