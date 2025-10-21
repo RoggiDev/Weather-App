@@ -140,3 +140,10 @@ vite.config.ts.timestamp-*
 
 # macOS system files
 .DS_Store
+
+# Ignorar dist global
+dist
+
+# Pero no ignorar los dist de librerías locales
+!src/lib/**/dist/
+!src/lib/**/dist/*
