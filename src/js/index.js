@@ -298,11 +298,15 @@ const searchWeatherByCity = async () => {
       });
 
       return;
+    } finally {
+      initLenis();
     }
   } else {
     document.getElementById("city").textContent = "--";
     document.getElementById("date").textContent = "--/--/----";
     document.getElementById("temp").textContent = "--° C";
     document.getElementById("weather").textContent = "--";
+
+    initLenis();
   }
 };
