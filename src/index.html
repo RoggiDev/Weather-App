@@ -28,17 +28,17 @@
     <!-- libraries -->
     <link
       rel="stylesheet"
-      href="../lib/bootstrap 5.3.8/dist/css/bootstrap.min.css"
+      href="./lib/bootstrap 5.3.8/dist/css/bootstrap.min.css"
     />
 
     <link
       rel="stylesheet"
-      href="../lib/bootstrap-icons 1.13.1/font/bootstrap-icons.min.css"
+      href="./lib/bootstrap-icons 1.13.1/font/bootstrap-icons.min.css"
     />
 
     <link
       rel="stylesheet"
-      href="../lib/sweetalert2 11.23.0/dist/sweetalert2.min.css"
+      href="./lib/sweetalert2 11.23.0/dist/sweetalert2.min.css"
     />
 
     <!-- Stylesheets -->
@@ -189,11 +189,18 @@
 
         <!-- Video -->
         <div class="c-video-container">
-          <video autoplay muted loop playsinline class="c-bg-video">
-            <source
-              src="./media/video/855222-sd_960_540_25fps.mp4"
-              type="video/mp4"
-            />
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            class="c-bg-video"
+            poster="./media/images/Rain Poster.webp"
+          >
+            <source src="./media/videos/Rain Video.mp4" type="video/mp4" />
+
+            Tu navegador no soporta el elemento de video.
           </video>
         </div>
       </section>
@@ -283,6 +290,15 @@
       <div class="container c-footer-container">
         <p class="m-0 c-author">&copy; <span>2025 </span>-RoggiDev</p>
 
+        <p class="m-0 c-api-credits">
+          Weather data
+          <a href="https://www.weatherapi.com/" target="_blank">
+            WeatherAPI.com
+          </a>
+          | Location data
+          <a href="https://www.geoapify.com/" target="_blank"> Geoapify </a>
+        </p>
+
         <div class="c-socials">
           <a
             href="mailto:yael.rodriguez.g@outlook.es"
@@ -320,7 +336,7 @@
 
     <script src="./lib/lenis 1.3.11/dist/lenis.min.js"></script>
 
-    <script src="../lib/sweetalert2 11.23.0/dist/sweetalert2.min.js"></script>
+    <script src="./lib/sweetalert2 11.23.0/dist/sweetalert2.min.js"></script>
 
     <!-- Scripts -->
     <script src="./js/shared/layout.js"></script>

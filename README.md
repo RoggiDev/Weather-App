@@ -22,6 +22,8 @@ Puedes explorar el proyecto desplegado en **Render** haciendo clic en el siguien
 - Node
 - Express
 - Axios
+- Weather API
+- Geoapify Autocomplete API
 
 ## 🧑‍💻 Autor/es
 

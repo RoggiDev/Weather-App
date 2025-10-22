@@ -63,7 +63,7 @@ app.get("/api/autocomplete", async (req, res) => {
 
 // ! Ruta API que devuelve el clima de una ciudad
 app.get("/api/weather", async (req, res) => {
-  const city = req.query.city;
+  const city = req.query.city?.trim();
 
   if (!city) return res.status(400).json({ error: "Ciudad no proporcionada" });
 

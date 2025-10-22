@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
   const lenis = new Lenis({
     autoRaf: true,
     smooth: true,
@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     normalizeScroll: true,
   });
 
-  /* lenis.on("scroll", ScrollTrigger.update);
+  lenis.on("scroll", ScrollTrigger.update);
 
-  ScrollTrigger.refresh(); */
+  ScrollTrigger.refresh();
 });

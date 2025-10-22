@@ -209,6 +209,7 @@ footer {
   flex-wrap: wrap-reverse;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
 
 .c-author {
@@ -216,6 +217,12 @@ footer {
   align-items: center;
   text-align: start;
   font-size: clamp(1.2rem, 1.1vw, 1.7rem);
+}
+
+.c-api-credits {
+  display: flex;
+  align-items: center;
+  text-align: start;
 }
 
 .c-socials {
@@ -250,6 +257,11 @@ footer {
   }
 
   .c-author {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .c-api-credits {
     width: 100%;
     justify-content: center;
   }
