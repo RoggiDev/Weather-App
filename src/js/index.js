@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchButton = document.getElementById("searchButton");
   const form = document.getElementById("weatherForm");
 
+  lazyLoadingVideo();
+
   cityInput.addEventListener("input", debounce(citySuggestions, 300));
 
   cityInput.addEventListener("change", (e) => {
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const lazyLodingVideo = () => {
+const lazyLoadingVideo = () => {
   const bgVideo = document.getElementById("bgVideo");
 
   const observer = new IntersectionObserver((entries) => {
