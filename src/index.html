@@ -195,10 +195,21 @@
             loop
             playsinline
             preload="none"
+            id="bgVideo"
             class="c-bg-video"
             poster="./media/images/Rain Poster.webp"
           >
-            <source src="./media/videos/Rain Video.mp4" type="video/mp4" />
+            <source
+              src="./media/videos/Rain Video.mp4"
+              type="video/mp4"
+              media="(max-width: 576px)"
+            />
+
+            <source
+              src="./media/videos/Rain Video Mobile.mp4"
+              type="video/mp4"
+              media="(min-width: 576px)"
+            />
 
             Tu navegador no soporta el elemento de video.
           </video>

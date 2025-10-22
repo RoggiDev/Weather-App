@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const video = document.querySelector(".c-bg-video");
+  const video = document.getElementById("bgVideo");
   const cityInput = document.getElementById("cityInput");
   const datalist = document.getElementById("cityList");
   const searchButton = document.getElementById("searchButton");
