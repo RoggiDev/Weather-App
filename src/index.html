@@ -177,11 +177,12 @@
             <p class="m-0 c-video-credits">
               Video by:
               <a
-                href="https://www.pexels.com/es-es/video/video-de-lapso-de-tiempo-de-autos-pasando-en-un-dia-lluvioso-855222//"
+                id="videoLink"
+                href="https://www.pexels.com/es-es/video/video-de-lapso-de-tiempo-de-autos-pasando-en-un-dia-lluvioso-855222/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Pixabay
+                <span id="videoAuthor">Pixabay</span>
               </a>
             </p>
           </div>
@@ -200,15 +201,17 @@
             poster="./media/images/Rain Poster.webp"
           >
             <source
-              src="./media/videos/Rain Video.mp4"
+              id="videoMobile"
+              src="./media/videos/Rain Video Mobile.mp4"
               type="video/mp4"
               media="(max-width: 576px)"
             />
 
             <source
-              src="./media/videos/Rain Video Mobile.mp4"
+              id="videoDesktop"
+              src="./media/videos/Rain Video.mp4"
               type="video/mp4"
-              media="(min-width: 576px)"
+              media="(min-width: 577px)"
             />
 
             Tu navegador no soporta el elemento de video.
@@ -301,14 +304,15 @@
       <div class="container c-footer-container">
         <p class="m-0 c-author">&copy; <span>2025 </span>-RoggiDev</p>
 
-        <p class="m-0 c-api-credits">
+        <!-- APIs -->
+        <!-- <p class="m-0 c-api-credits">
           Weather data
           <a href="https://www.weatherapi.com/" target="_blank">
             WeatherAPI.com
           </a>
           | Location data
           <a href="https://www.geoapify.com/" target="_blank"> Geoapify </a>
-        </p>
+        </p> -->
 
         <div class="c-socials">
           <a

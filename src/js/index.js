@@ -1,20 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const video = document.getElementById("bgVideo");
   const cityInput = document.getElementById("cityInput");
   const datalist = document.getElementById("cityList");
   const searchButton = document.getElementById("searchButton");
   const form = document.getElementById("weatherForm");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        video.load();
-        observer.unobserve(video);
-      }
-    });
-  });
-
-  observer.observe(video);
 
   cityInput.addEventListener("input", debounce(citySuggestions, 300));
 
@@ -30,6 +18,22 @@ document.addEventListener("DOMContentLoaded", () => {
     searchWeatherByCity();
   });
 });
+
+const lazyLodingVideo = () => {
+  const bgVideo = document.getElementById("bgVideo");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        bgVideo.load();
+
+        observer.unobserve(bgVideo);
+      }
+    });
+  });
+
+  observer.observe(bgVideo);
+};
 
 // ! Retrasar la ejecución mientras se siga escribiendo
 function debounce(func, delay) {
@@ -113,6 +117,12 @@ const searchWeatherByCity = async () => {
         throw new Error(data.error);
       }
 
+      const bgVideo = document.getElementById("bgVideo");
+      const videoDesktop = document.getElementById("videoDesktop");
+      const videoMobile = document.getElementById("videoMobile");
+      const videoAuthor = document.getElementById("videoAuthor");
+      const videoLink = document.getElementById("videoLink");
+
       // const today = data.dateToday.split(" ")[0];
       const now = new Date();
 
@@ -120,6 +130,75 @@ const searchWeatherByCity = async () => {
       const getDayAbbr = (dateStr) => {
         const dateObj = new Date(dateStr + "T12:00:00");
         return dateObj.toLocaleDateString("es-MX", { weekday: "short" });
+      };
+
+      // Obtener video
+      const getVideoBackground = (descriptionStr) => {
+        const d = descriptionStr.toLowerCase();
+
+        if (
+          d.includes("despejado") ||
+          d.includes("soleado") ||
+          d.includes("cielo claro") ||
+          d.includes("parcialmente nublado") ||
+          d.includes("nubes dispersas") ||
+          d.includes("parcialmente soleado")
+        ) {
+          bgVideo.setAttribute("poster", "./media/images/Sunny Poster.webp");
+
+          videoDesktop.setAttribute("src", "./media/videos/Sunny Video.mp4");
+
+          videoMobile.setAttribute(
+            "src",
+            "./media/videos/Sunny Video Mobile.mp4"
+          );
+
+          videoLink.setAttribute(
+            "href",
+            "https://www.pexels.com/es-es/video/trigo-con-vista-al-atardecer-2097414/"
+          );
+
+          videoAuthor.innerText = "Madison Inouye";
+        }
+
+        if (
+          d.includes("lluvia") ||
+          d.includes("chubascos") ||
+          d.includes("precipitaciones") ||
+          d.includes("llovizna") ||
+          d.includes("aguacero") ||
+          d.includes("tormenta eléctrica") ||
+          d.includes("tormenta") ||
+          d.includes("tormenta tropical") ||
+          d.includes("tormentoso") ||
+          d.includes("nieve") ||
+          d.includes("granizo") ||
+          d.includes("tormenta de nieve") ||
+          d.includes("bruma") ||
+          d.includes("neblina") ||
+          d.includes("niebla") ||
+          d.includes("humo") ||
+          d.includes("calima")
+        ) {
+          bgVideo.setAttribute("poster", "./media/images/Rain Poster.webp");
+
+          videoDesktop.setAttribute("src", "./media/videos/Rain Video.mp4");
+
+          videoMobile.setAttribute(
+            "src",
+            "./media/videos/Rain Video Mobile.mp4"
+          );
+
+          videoLink.setAttribute(
+            "href",
+            "https://www.pexels.com/es-es/video/video-de-lapso-de-tiempo-de-autos-pasando-en-un-dia-lluvioso-855222/"
+          );
+
+          videoAuthor.innerText = "Pixabay";
+        }
+
+        bgVideo.load();
+        bgVideo.play().catch(() => {});
       };
 
       // Obtener ícono del clima
@@ -177,6 +256,8 @@ const searchWeatherByCity = async () => {
 
         if (d.includes("ventoso") || d.includes("viento")) return "bi-wind";
       };
+
+      getVideoBackground(data.description);
 
       // ! Current Info
       document.getElementById("city").textContent = data.location;
