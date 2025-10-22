@@ -21,17 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// ! Aplicar Lazy Loading al video de fondo
 const lazyLoadingVideo = () => {
   const bgVideo = document.getElementById("bgVideo");
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        bgVideo.load();
+    if (entries[0].isIntersecting) {
+      bgVideo.load();
 
-        observer.unobserve(bgVideo);
-      }
-    });
+      observer.disconnect();
+    }
   });
 
   observer.observe(bgVideo);
